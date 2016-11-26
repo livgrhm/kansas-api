@@ -4,7 +4,12 @@ pom.xml.releaseBackup
 pom.xml.versionsBackup
 release.properties
 nb-configuration.xml
+
 .DS_Store
 ../.DS_Store
+src/.DS_Store
+src/main/.DS_Store
+src/main/java/com/.DS_Store
+
 start.sh
 *.log
