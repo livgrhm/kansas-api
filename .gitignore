@@ -6,3 +6,5 @@ release.properties
 nb-configuration.xml
 .DS_Store
 ../.DS_Store
+start.sh
+*.log
