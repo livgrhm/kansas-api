@@ -1,10 +1,17 @@
 package com.livgrhm.kansas;
 
+import com.livgrhm.kansas.db.MyDAO;
+import com.livgrhm.kansas.db.UserDAO;
 import com.livgrhm.kansas.health.EmailHealthCheck;
+import com.livgrhm.kansas.resources.AuthResource;
 import com.livgrhm.kansas.resources.KansasResource;
+import com.livgrhm.kansas.resources.RandomResource;
+import com.livgrhm.kansas.resources.UserResource;
 import io.dropwizard.Application;
+import io.dropwizard.jdbi.DBIFactory;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import org.skife.jdbi.v2.DBI;
 
 public class KansasApplication extends Application<KansasConfiguration> {
 
@@ -30,12 +37,22 @@ public class KansasApplication extends Application<KansasConfiguration> {
             configuration.getTemplate(),
             configuration.getDefaultName()
         );
+        environment.jersey().register(resource);
         
         final EmailHealthCheck healthCheck = 
                 new EmailHealthCheck(configuration.getTemplate());
         environment.healthChecks().register("template", healthCheck);
         
-        environment.jersey().register(resource);
+        final DBIFactory factory = new DBIFactory();
+        final DBI jdbi = factory.build(environment, configuration.getDataSourceFactory(), "mysql");
+        
+        // Auth & User Service
+        final UserDAO userDAO = jdbi.onDemand(UserDAO.class);
+        final AuthResource authResource = new AuthResource(userDAO, configuration.getSystemType());
+        final UserResource userResource = new UserResource(userDAO);
+        environment.jersey().register(authResource);
+        environment.jersey().register(userResource);
+        
     }
 
 }

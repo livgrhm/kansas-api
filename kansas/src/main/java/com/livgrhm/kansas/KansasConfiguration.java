@@ -1,7 +1,7 @@
 package com.livgrhm.kansas;
 
 import io.dropwizard.Configuration;
-//import io.dropwizard.db.DataSourceFactory;
+import io.dropwizard.db.DataSourceFactory;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.validation.Valid;
 import org.hibernate.validator.constraints.*;
@@ -52,15 +52,19 @@ public class KansasConfiguration extends Configuration {
     @JsonProperty("defaultName")
     private String defaultName = "";
     
-//    @Valid
-//    @NotNull
-//    @JsonProperty
-//    private DataSourceFactory database = new DataSourceFactory();
-//
-//    public DataSourceFactory getDataSourceFactory() {
-//        return getDatabase();
-//    }
-    
+    @Valid
+    @NotNull
+    private DataSourceFactory database = new DataSourceFactory();
+
+    @JsonProperty("database")
+    public void setDataSourceFactory(DataSourceFactory factory) {
+        this.database = factory;
+    }
+
+    @JsonProperty("database")
+    public DataSourceFactory getDataSourceFactory() {
+        return database;
+    }
     
     @JsonProperty
     public String getSmtpPort() {
@@ -151,20 +155,6 @@ public class KansasConfiguration extends Configuration {
     public void setEmailPassword(String emailPassword) {
         this.emailPassword = emailPassword;
     }
-
-//    /**
-//     * @return the database
-//     */
-//    public DataSourceFactory getDatabase() {
-//        return database;
-//    }
-//
-//    /**
-//     * @param database the database to set
-//     */
-//    public void setDatabase(DataSourceFactory database) {
-//        this.database = database;
-//    }
 
     /**
      * @return the emailFrom
