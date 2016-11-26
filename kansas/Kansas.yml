@@ -1,0 +1,13 @@
+smtpServer: smtp.gmail.com
+smtpPort: 465
+TLS: Y
+SSL: Y
+SMTPAuth: Y
+emailFrom: livgrhm-kansasapp@gmail.com
+emailUserId: livgrhm-kansasapp@gmail.com
+emailPassword: KansasApp5
+
+systemType: Internet
+
+template: Hello, %s!
+defaultName: Stranger

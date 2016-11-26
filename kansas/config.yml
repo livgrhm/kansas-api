@@ -1,0 +1,14 @@
+logging:
+  level: INFO
+  loggers:
+    com.livgrhm: DEBUG
+  appenders:
+    - type: console
+    - type: file
+      threshold: INFO
+      logFormat: "%-6level [%d] %cn %msg %L %ex{6}"
+      currentLogFilename: csctb2.log
+      archivedLogFilenamePattern: csctb-%d{yyyy-MM-dd}-%i.log.gz
+      archivedFileCount: 7
+      timeZone: UTC
+      maxFileSize: 10MB
