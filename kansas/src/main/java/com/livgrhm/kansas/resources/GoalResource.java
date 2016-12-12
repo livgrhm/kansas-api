@@ -77,6 +77,22 @@ public class GoalResource {
         }
     }
     
+    @GET
+    @Path("user/{userId}")
+    @Timed
+    public Response getGoals(@PathParam("userId") int userId) {
+        try {
+            List<Goal> list = this.dao.getGoalsByUserId(userId);
+            if (list != null) {
+                return Response.ok(list).build();
+            }
+            return Response.status(Response.Status.NOT_FOUND).build();
+        } catch (Exception e) {
+            System.out.println("Exception getting goal: " + e.getMessage());
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+    
 //    @POST
 //    @Timed
 //    public Response addGoal(Goal goal) {

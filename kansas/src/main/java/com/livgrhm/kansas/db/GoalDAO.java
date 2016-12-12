@@ -50,9 +50,18 @@ public interface GoalDAO {
     List<Goal> getGoals();
     
     /**
+     * Get List of All Goals by User ID
+     * @param id    user ID
+     * @return      List of Goal objects
+     */
+    @SqlQuery("select * from goal where userId=:id")
+    @Mapper(GoalMapper.class)
+    List<Goal> getGoalsByUserId(@Bind("id") int id);
+    
+    /**
      * Get Goal by Goal ID
-     * @param id
-     * @return 
+     * @param id    goal ID
+     * @return      Goal object
      */
     @SqlQuery("select * from goal where goalId=:id")
     @Mapper(GoalMapper.class)
