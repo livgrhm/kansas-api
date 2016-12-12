@@ -28,7 +28,6 @@ import com.livgrhm.kansas.api.AuthenticationResult;
 import com.livgrhm.kansas.api.SystemType;
 import com.livgrhm.kansas.core.Test;
 import com.livgrhm.kansas.core.User;
-import com.livgrhm.kansas.db.MyDAO;
 import com.livgrhm.kansas.db.UserDAO;
 import java.util.Date;
 import java.util.HashMap;

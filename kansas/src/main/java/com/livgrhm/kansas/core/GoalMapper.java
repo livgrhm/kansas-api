@@ -21,28 +21,30 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.livgrhm.kansas.db;
+package com.livgrhm.kansas.core;
 
-import com.livgrhm.kansas.core.Test;
-import com.livgrhm.kansas.core.TestMapper;
-import java.util.Iterator;
-import java.util.List;
-import org.skife.jdbi.v2.sqlobject.Bind;
-import org.skife.jdbi.v2.sqlobject.SqlQuery;
-import org.skife.jdbi.v2.sqlobject.SqlUpdate;
-import org.skife.jdbi.v2.sqlobject.customizers.Mapper;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import org.skife.jdbi.v2.StatementContext;
+import org.skife.jdbi.v2.tweak.ResultSetMapper;
 
-public interface MyDAO {
-    @SqlUpdate("create table something (id int primary key, name varchar(100))")
-    void createSomethingTable();
-
-    @SqlUpdate("insert into something (id, name) values (:id, :name)")
-    void insert(@Bind("id") int id, @Bind("name") String name);
-
-    @SqlQuery("select name from something where id = :id")
-    String findNameById(@Bind("id") int id);
+/**
+ *
+ * @author oliviagraham
+ */
+public class GoalMapper implements ResultSetMapper<Goal> {
     
-    @SqlQuery("select testId, testContent from test")
-    @Mapper(TestMapper.class)
-    Iterator<Test> findAllNames();
+    @Override
+    public Goal map(int index, ResultSet r, StatementContext ctx) throws SQLException {
+        return new Goal(
+                r.getInt("goalId"),
+                r.getInt("userId"),
+                r.getInt("timespan"),
+                r.getString("goalContent"),
+                r.getInt("isActive"),
+                r.getInt("isDeleted"),
+                r.getTimestamp("datetimeCreated"),
+                r.getTimestamp("datetimeUpdated")
+        );
+    }
 }

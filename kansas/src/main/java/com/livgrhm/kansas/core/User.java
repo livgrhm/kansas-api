@@ -23,6 +23,7 @@
  */
 package com.livgrhm.kansas.core;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.sql.Timestamp;
 import java.util.Date;
 
@@ -31,12 +32,34 @@ import java.util.Date;
  * @author oliviagraham
  */
 public class User {
-    private int userId, userFailedLogons;
-    private String firstName, lastName, email, userPasswordHash, userAuthHash, 
-            userLastIP, userStatus;
+    @JsonProperty("userId")
+    private int userId;
+    @JsonProperty("firstName")
+    private String firstName;
+    @JsonProperty("lastName")
+    private String lastName; 
+    @JsonProperty("email")
+    private String email;
+    @JsonProperty("userPasswordHash")
+    private String userPasswordHash; 
+    @JsonProperty("userStatus")
+    private String userStatus;
+    @JsonProperty("userAuthHash")
+    private String userAuthHash; 
+    @JsonProperty("userLastIP")
+    private String userLastIP; 
+    @JsonProperty("userFailedLogons")
+    private int userFailedLogons;
+    @JsonProperty("userAuthTimestamp")
     private Date userAuthTimestamp;
-    private int isActive, isDeleted;
-    private Timestamp datetimeCreated, datetimeUpdated;
+    @JsonProperty("isActive")
+    private int isActive;
+    @JsonProperty("isDeleted")
+    private int isDeleted;
+    @JsonProperty("datetimeCreated")
+    private Timestamp datetimeCreated;
+    @JsonProperty("datetimeUpdated")
+    private Timestamp datetimeUpdated;
 
     public User () { }
     

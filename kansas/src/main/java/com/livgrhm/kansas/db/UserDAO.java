@@ -26,30 +26,68 @@ package com.livgrhm.kansas.db;
 import com.livgrhm.kansas.core.User;
 import com.livgrhm.kansas.core.UserMapper;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import org.skife.jdbi.v2.sqlobject.Bind;
+import org.skife.jdbi.v2.sqlobject.GetGeneratedKeys;
 import org.skife.jdbi.v2.sqlobject.SqlQuery;
 import org.skife.jdbi.v2.sqlobject.SqlUpdate;
 import org.skife.jdbi.v2.sqlobject.customizers.Mapper;
 
 public interface UserDAO {
-//    @SqlUpdate("create table something (id int primary key, name varchar(100))")
-//    void createSomethingTable();
-//
+
+    /**
+     * Set User Authentication Hash (user is logged in)
+     * @param userId    user that is logged in
+     * @param authHash  authentication hash
+     * @param now       authentication timestamp, will last 24hrs
+     * @param lastIP    IP address of login
+     */
     @SqlUpdate("update user set userAuthHash=:authHash, userAuthTimestamp=:now, "
             + "userLastIP=:lastIP where userId=:userId")
     void setUserAuthHash(@Bind("userId") int userId, @Bind("authHash") String authHash, 
-            @Bind("now") java.sql.Date now, @Bind("lastIP") String lastIP);
+            @Bind("now") Date now, @Bind("lastIP") String lastIP);
     
+    /**
+     * Create a User (registration)
+     * @param firstName         user first name
+     * @param lastName          user last name
+     * @param email             user email address
+     * @param userStatus        user status (N == password to be reset, A == active)
+     * @param userPasswordHash  user password, hashed
+     * @param userAuthHash      user authorisation hash
+     * @return                  integer userId of new user
+     */
+    @SqlUpdate("insert into user (firstName, lastName, email, userStatus, userPasswordHash, "
+            + "userAuthHash, userAuthTimestamp, userFailedLogons, userLastIP) "
+            + "values (:firstName, :lastName, :email, :userStatus, :userPasswordHash, "
+            + ":userAuthHash, now(), 0, null)")
+    @GetGeneratedKeys
+    int createUser(@Bind("firstName") String firstName, @Bind("lastName") String lastName,
+            @Bind("email") String email, @Bind("userStatus") String userStatus, 
+            @Bind("userPasswordHash") String userPasswordHash, @Bind("userAuthHash") String userAuthHash);
+    
+    /**
+     * Get User by ID
+     * @param id    ID of user to get
+     * @return      User object
+     */
     @SqlQuery("select * from user where userId=:id")
     @Mapper(UserMapper.class)
     User getUserById(@Bind("id") int id);
     
+    /**
+     * Get User by Email Address
+     * @param email Email address of user to get
+     * @return      User object
+     */
     @SqlQuery("select * from user where email=:email")
     @Mapper(UserMapper.class)
     User getUserByEmail(@Bind("email") String email);
     
+    /**
+     * Get List of All Users
+     * @return  List of User objects
+     */
     @SqlQuery("select * from user")
     @Mapper(UserMapper.class)
     List<User> getUsers();

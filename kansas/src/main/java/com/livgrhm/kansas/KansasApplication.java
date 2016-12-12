@@ -1,11 +1,11 @@
 package com.livgrhm.kansas;
 
-import com.livgrhm.kansas.db.MyDAO;
+import com.livgrhm.kansas.db.GoalDAO;
 import com.livgrhm.kansas.db.UserDAO;
 import com.livgrhm.kansas.health.EmailHealthCheck;
 import com.livgrhm.kansas.resources.AuthResource;
+import com.livgrhm.kansas.resources.GoalResource;
 import com.livgrhm.kansas.resources.KansasResource;
-import com.livgrhm.kansas.resources.RandomResource;
 import com.livgrhm.kansas.resources.UserResource;
 import io.dropwizard.Application;
 import io.dropwizard.jdbi.DBIFactory;
@@ -33,26 +33,35 @@ public class KansasApplication extends Application<KansasConfiguration> {
     public void run(final KansasConfiguration configuration,
                     final Environment environment) {
         
+        // Core resource/app configuration
         final KansasResource resource = new KansasResource(
             configuration.getTemplate(),
             configuration.getDefaultName()
         );
         environment.jersey().register(resource);
         
+        // Health checks
         final EmailHealthCheck healthCheck = 
                 new EmailHealthCheck(configuration.getTemplate());
         environment.healthChecks().register("template", healthCheck);
         
+        // Database (MySQL)
         final DBIFactory factory = new DBIFactory();
         final DBI jdbi = factory.build(environment, configuration.getDataSourceFactory(), "mysql");
         
-        // Auth & User Service
+        // Data Access Objects
         final UserDAO userDAO = jdbi.onDemand(UserDAO.class);
+        final GoalDAO goalDAO = jdbi.onDemand(GoalDAO.class);
+        
+        // Init Resources
         final AuthResource authResource = new AuthResource(userDAO, configuration.getSystemType());
         final UserResource userResource = new UserResource(userDAO);
+        final GoalResource goalResource = new GoalResource(goalDAO);
+        
+        // Register Resources
         environment.jersey().register(authResource);
         environment.jersey().register(userResource);
-        
+        environment.jersey().register(goalResource);
     }
-
-}
+    
+} // /class KansasApplication
