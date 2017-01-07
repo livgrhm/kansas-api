@@ -24,9 +24,9 @@
 package com.livgrhm.kansas.resources;
 
 import com.codahale.metrics.annotation.Timed;
+import com.livgrhm.kansas.api.AuthItem;
 import com.livgrhm.kansas.api.AuthenticationResult;
 import com.livgrhm.kansas.api.SystemType;
-import com.livgrhm.kansas.core.Test;
 import com.livgrhm.kansas.core.User;
 import com.livgrhm.kansas.db.UserDAO;
 import java.util.Date;
@@ -44,6 +44,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.lang.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -52,28 +53,14 @@ import org.slf4j.LoggerFactory;
 public class AuthResource {
     
     private final UserDAO dao;
+    private final HashMap authMap;
     private final String systemType;
     
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthResource.class);
     
-    // next few line to create an in memory list of the currently authorised users
-    private static HashMap authMap = new HashMap();
-    
-    private class AuthItem {
-        String email;
-        java.sql.Date loginDate;
-        String ipAddress;
-
-        @Override
-        public String toString() {
-            return "AI email= " + email;
-        }
-    }
-
-    private AuthItem thisAuth;
-
-    public AuthResource(UserDAO dao, String systemType) {
+    public AuthResource(UserDAO dao, HashMap authMap, String systemType) {
         this.dao = dao;
+        this.authMap = authMap;
         this.systemType = systemType;
     }
 
@@ -121,9 +108,9 @@ public class AuthResource {
             LOGGER.info(" auth badPassword " + email);
             if (user.getUserFailedLogons() > 3) { // already 3 failed attempts, so disable the account
                 user.setUserStatus("L");
-                //UserDAO.updateUserLockAccount(user.getUserId());
+                this.dao.updateUserLockAccount(user.getUserId());
             }
-            //UserDAO.updateFailedLogonCount(email);
+            this.dao.updateFailedLogonCount(user.getUserId());
             return new AuthenticationResult("F");
         }
     }
@@ -144,5 +131,8 @@ public class AuthResource {
         ai.loginDate = now;
         ai.ipAddress = ip;
         authMap.put(hash, ai);
+        
+        System.out.println("PUT IN AUTHMAP HASH: " + hash);
+        System.out.println("AUTHMAP SIZE: " + this.authMap.size());
     }
 }

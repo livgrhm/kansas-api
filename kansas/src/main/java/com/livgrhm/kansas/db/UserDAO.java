@@ -55,25 +55,69 @@ public interface UserDAO {
      * @param userStatus        user status (N == password to be reset, A == active)
      * @param userPasswordHash  user password, hashed
      * @param userAuthHash      user authorisation hash
+     * @param userAuthTimestamp user authorisation timestamp
      * @return                  integer userId of new user
      */
     @SqlUpdate("insert into user (firstName, lastName, email, userStatus, userPasswordHash, "
             + "userAuthHash, userAuthTimestamp, userFailedLogons, userLastIP) "
             + "values (:firstName, :lastName, :email, :userStatus, :userPasswordHash, "
-            + ":userAuthHash, now(), 0, null)")
+            + ":userAuthHash, :userAuthTimestamp, 0, null)")
     @GetGeneratedKeys
     int createUser(@Bind("firstName") String firstName, @Bind("lastName") String lastName,
             @Bind("email") String email, @Bind("userStatus") String userStatus, 
-            @Bind("userPasswordHash") String userPasswordHash, @Bind("userAuthHash") String userAuthHash);
+            @Bind("userPasswordHash") String userPasswordHash, @Bind("userAuthHash") String userAuthHash,
+            @Bind("userAuthTimestamp") Date userAuthTimestamp);
+   
+    /**
+     * Update a User
+     * @param userId        ID of user to update
+     * @param firstName     user first name
+     * @param lastName      user last name
+     * @param email         user email
+     */
+    @SqlUpdate("update user set firstName=:firstName, lastName=:lastName, "
+            + "email=:email, datetimeUpdated=now() where userId=:userId")
+    void updateUser(@Bind("userId") int userId, @Bind("firstName") String firstName, 
+            @Bind("lastName") String lastName, @Bind("email") String email);
+    
+    /**
+     * Delete a User
+     * @param userId    ID of user to delete
+     */
+    @SqlUpdate("update user set isActive=0, isDeleted=1, datetimeUpdated=now() "
+            + "where userId=:userId")
+    void deleteUser(@Bind("userId") int userId);
+    
+    /**
+     * Update failed logon count for user
+     * @param userId    ID of user to update logon count for
+     */
+    @SqlUpdate("update user set userFailedLogons=userFailedLogons+1 where userId=:userId")
+    void updateFailedLogonCount(@Bind("userId") int userId);
+    
+    /**
+     * Lock user account
+     * @param userId 
+     */
+    @SqlUpdate("update user set usrStatus='L' where userId=:userId")
+    void updateUserLockAccount(@Bind("userId") int userId);
+    
+    /**
+     * Get User by Current Hash
+     * @param hash  Password hash to search for
+     * @return      User if found
+     */
+    @SqlQuery("select userId from user where userAuthHash=:hash")
+    User getUserByCurrentHash(@Bind("hash") String hash);
     
     /**
      * Get User by ID
-     * @param id    ID of user to get
-     * @return      User object
+     * @param userId    ID of user to get
+     * @return          User object
      */
-    @SqlQuery("select * from user where userId=:id")
+    @SqlQuery("select * from user where userId=:userId")
     @Mapper(UserMapper.class)
-    User getUserById(@Bind("id") int id);
+    User getUserById(@Bind("userId") int userId);
     
     /**
      * Get User by Email Address

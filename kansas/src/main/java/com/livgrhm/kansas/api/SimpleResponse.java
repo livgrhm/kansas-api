@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2016 oliviagraham.
+ * Copyright 2017 oliviagraham.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,21 +21,50 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.livgrhm.kansas.core;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import org.skife.jdbi.v2.StatementContext;
-import org.skife.jdbi.v2.tweak.ResultSetMapper;
+package com.livgrhm.kansas.api;
 
 /**
  *
  * @author oliviagraham
  */
-public class TestMapper implements ResultSetMapper<Test> {
+public class SimpleResponse {
+    private int statusCode;
+    private String status;
+    private String message;
     
-    @Override
-    public Test map(int index, ResultSet r, StatementContext ctx) throws SQLException {
-        return new Test(r.getInt("testId"), r.getString("testContent"));
+    public SimpleResponse(int statusCode, String status, String message) {
+        this.statusCode = statusCode;
+        this.status = status;
+        this.message = message;
+    }
+    
+    public String getStatus() {
+        return this.status;
+    }
+    
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    
+    public String getMessage() {
+        return this.message;
+    }
+    
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    /**
+     * @return the statusCode
+     */
+    public int getStatusCode() {
+        return statusCode;
+    }
+
+    /**
+     * @param statusCode the statusCode to set
+     */
+    public void setStatusCode(int statusCode) {
+        this.statusCode = statusCode;
     }
 }

@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2016 oliviagraham.
+ * Copyright 2017 oliviagraham.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,48 +21,22 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.livgrhm.kansas.core;
+package com.livgrhm.kansas.api;
+
+import java.util.Date;
 
 /**
  *
  * @author oliviagraham
  */
-public class Test {
-    private int testId;
-    private String testContent;
-    
-    public Test () { }
-    
-    public Test(int testId, String testContent) {
-        this.testId = testId;
-        this.testContent = testContent;
-    }
+public class AuthItem {
+    public String email;
+    public Date loginDate;
+    public String ipAddress;
+    public int userId;
 
-    /**
-     * @return the testId
-     */
-    public int getTestId() {
-        return testId;
+    @Override
+    public String toString() {
+        return "AI email= " + email;
     }
-
-    /**
-     * @param testId the testId to set
-     */
-    public void setTestId(int testId) {
-        this.testId = testId;
-    }
-
-    /**
-     * @return the testContent
-     */
-    public String getTestContent() {
-        return testContent;
-    }
-
-    /**
-     * @param testContent the testContent to set
-     */
-    public void setTestContent(String testContent) {
-        this.testContent = testContent;
-    }   
 }

@@ -28,6 +28,7 @@ import com.livgrhm.kansas.core.Goal;
 import com.livgrhm.kansas.core.User;
 import com.livgrhm.kansas.db.GoalDAO;
 import com.livgrhm.kansas.db.UserDAO;
+import java.util.HashMap;
 import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -49,9 +50,11 @@ import org.apache.commons.codec.digest.DigestUtils;
 public class GoalResource {
     
     private final GoalDAO dao;
+    private final HashMap authMap;
 
-    public GoalResource(GoalDAO dao) {
+    public GoalResource(GoalDAO dao, HashMap authMap) {
         this.dao = dao; 
+        this.authMap = authMap;
     }
     
     @GET

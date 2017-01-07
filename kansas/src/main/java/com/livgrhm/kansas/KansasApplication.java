@@ -5,12 +5,13 @@ import com.livgrhm.kansas.db.UserDAO;
 import com.livgrhm.kansas.health.EmailHealthCheck;
 import com.livgrhm.kansas.resources.AuthResource;
 import com.livgrhm.kansas.resources.GoalResource;
-import com.livgrhm.kansas.resources.KansasResource;
+//import com.livgrhm.kansas.resources.KansasResource;
 import com.livgrhm.kansas.resources.UserResource;
 import io.dropwizard.Application;
 import io.dropwizard.jdbi.DBIFactory;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import java.util.HashMap;
 import org.skife.jdbi.v2.DBI;
 
 public class KansasApplication extends Application<KansasConfiguration> {
@@ -34,16 +35,17 @@ public class KansasApplication extends Application<KansasConfiguration> {
                     final Environment environment) {
         
         // Core resource/app configuration
-        final KansasResource resource = new KansasResource(
-            configuration.getTemplate(),
-            configuration.getDefaultName()
-        );
-        environment.jersey().register(resource);
+//        final KansasResource resource = new KansasResource(
+//            configuration.getTemplate(),
+//            configuration.getDefaultName()
+//        );
+//        environment.jersey().register(resource);
         
         // Health checks
         final EmailHealthCheck healthCheck = 
                 new EmailHealthCheck(configuration.getTemplate());
         environment.healthChecks().register("template", healthCheck);
+        
         
         // Database (MySQL)
         final DBIFactory factory = new DBIFactory();
@@ -53,10 +55,13 @@ public class KansasApplication extends Application<KansasConfiguration> {
         final UserDAO userDAO = jdbi.onDemand(UserDAO.class);
         final GoalDAO goalDAO = jdbi.onDemand(GoalDAO.class);
         
-        // Init Resources
-        final AuthResource authResource = new AuthResource(userDAO, configuration.getSystemType());
-        final UserResource userResource = new UserResource(userDAO);
-        final GoalResource goalResource = new GoalResource(goalDAO);
+        // Authentication Resource
+        HashMap authMap = new HashMap();
+        final AuthResource authResource = new AuthResource(userDAO, authMap, configuration.getSystemType());
+        
+        // User Resource
+        final UserResource userResource = new UserResource(userDAO, authMap);
+        final GoalResource goalResource = new GoalResource(goalDAO, authMap);
         
         // Register Resources
         environment.jersey().register(authResource);
