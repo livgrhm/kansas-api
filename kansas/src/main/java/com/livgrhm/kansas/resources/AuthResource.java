@@ -25,18 +25,14 @@ package com.livgrhm.kansas.resources;
 
 import com.codahale.metrics.annotation.Timed;
 import com.livgrhm.kansas.api.AuthItem;
+import com.livgrhm.kansas.api.AuthMap;
 import com.livgrhm.kansas.api.AuthenticationResult;
-import com.livgrhm.kansas.api.SystemType;
 import com.livgrhm.kansas.core.User;
 import com.livgrhm.kansas.db.UserDAO;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -44,7 +40,6 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.commons.lang.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,12 +48,12 @@ import org.slf4j.LoggerFactory;
 public class AuthResource {
     
     private final UserDAO dao;
-    private final HashMap authMap;
+    private final AuthMap authMap;
     private final String systemType;
     
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthResource.class);
     
-    public AuthResource(UserDAO dao, HashMap authMap, String systemType) {
+    public AuthResource(UserDAO dao, AuthMap authMap, String systemType) {
         this.dao = dao;
         this.authMap = authMap;
         this.systemType = systemType;
@@ -117,7 +112,8 @@ public class AuthResource {
     
     private void addToAuthList(String email, String hash, java.sql.Date now, String ip) {
         // clear any hashmap entries for this userId
-        Iterator i = authMap.entrySet().iterator();
+        HashMap authMapInst = this.authMap.getAuthMap();
+        Iterator i = authMapInst.entrySet().iterator();
         while (i.hasNext()) {
             Map.Entry item = (Map.Entry) i.next();
             AuthItem ai = (AuthItem) item.getValue();
@@ -130,9 +126,11 @@ public class AuthResource {
         ai.email = email;
         ai.loginDate = now;
         ai.ipAddress = ip;
-        authMap.put(hash, ai);
+        authMapInst.put(hash, ai);
         
         System.out.println("PUT IN AUTHMAP HASH: " + hash);
-        System.out.println("AUTHMAP SIZE: " + this.authMap.size());
+        System.out.println("AUTHMAP SIZE: " + authMapInst.size());
+        
+        this.authMap.setAuthMap(authMapInst);
     }
 }

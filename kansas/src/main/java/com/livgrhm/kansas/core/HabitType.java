@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2016 oliviagraham.
+ * Copyright 2017 oliviagraham.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,35 +24,28 @@
 package com.livgrhm.kansas.core;
 
 import java.sql.Timestamp;
-import java.util.List;
 
 /**
  *
  * @author oliviagraham
  */
-public class Goal {
-    // core
-    private int goalId;
-    private int userId;
-    private int timespan;
-    private String goalContent;
+public class HabitType {
+    private int habitTypeId;
+    private String habitType;
+    private String habitTypeDesc;
     private int isActive;
     private int isDeleted;
     private Timestamp datetimeCreated;
-    private Timestamp datetimeUpdated;
+    private Timestamp datetimeUpdate;
     
-    // helper
-    private List<GoalStep> goalSteps;
+    public HabitType () { }
     
-    public Goal () { }
-    
-    public Goal (int goalId, int userId, int timespan, String goalContent, int isActive,
-            int isDeleted, Timestamp datetimeCreated, Timestamp datetimeUpdated) {
+    public HabitType (int habitTypeId, String habitType, String habitTypeDesc,
+            int isActive, int isDeleted, Timestamp datetimeCreated, Timestamp datetimeUpdated) {
         
-        this.goalId = goalId;
-        this.userId = userId;
-        this.timespan = timespan;
-        this.goalContent = goalContent;
+        this.habitTypeId = habitTypeId;
+        this.habitType = habitType;
+        this.habitTypeDesc = habitTypeDesc;
         this.isActive = isActive;
         this.isDeleted = isDeleted;
         this.datetimeCreated = datetimeCreated;
@@ -60,59 +53,45 @@ public class Goal {
     }
 
     /**
-     * @return the goalId
+     * @return the habitTypeId
      */
-    public int getGoalId() {
-        return goalId;
+    public int getHabitTypeId() {
+        return habitTypeId;
     }
 
     /**
-     * @param goalId the goalId to set
+     * @param habitTypeId the habitTypeId to set
      */
-    public void setGoalId(int goalId) {
-        this.goalId = goalId;
+    public void setHabitTypeId(int habitTypeId) {
+        this.habitTypeId = habitTypeId;
     }
 
     /**
-     * @return the userId
+     * @return the habitType
      */
-    public int getUserId() {
-        return userId;
+    public String getHabitType() {
+        return habitType;
     }
 
     /**
-     * @param userId the userId to set
+     * @param habitType the habitType to set
      */
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setHabitType(String habitType) {
+        this.habitType = habitType;
     }
 
     /**
-     * @return the timespan
+     * @return the habitTypeDesc
      */
-    public int getTimespan() {
-        return timespan;
+    public String getHabitTypeDesc() {
+        return habitTypeDesc;
     }
 
     /**
-     * @param timespan the timespan to set
+     * @param habitTypeDesc the habitTypeDesc to set
      */
-    public void setTimespan(int timespan) {
-        this.timespan = timespan;
-    }
-
-    /**
-     * @return the goalContent
-     */
-    public String getGoalContent() {
-        return goalContent;
-    }
-
-    /**
-     * @param goalContent the goalContent to set
-     */
-    public void setGoalContent(String goalContent) {
-        this.goalContent = goalContent;
+    public void setHabitTypeDesc(String habitTypeDesc) {
+        this.habitTypeDesc = habitTypeDesc;
     }
 
     /**
@@ -158,30 +137,16 @@ public class Goal {
     }
 
     /**
-     * @return the datetimeUpdated
+     * @return the datetimeUpdate
      */
-    public Timestamp getDatetimeUpdated() {
-        return datetimeUpdated;
+    public Timestamp getDatetimeUpdate() {
+        return datetimeUpdate;
     }
 
     /**
-     * @param datetimeUpdated the datetimeUpdated to set
+     * @param datetimeUpdate the datetimeUpdate to set
      */
-    public void setDatetimeUpdated(Timestamp datetimeUpdated) {
-        this.datetimeUpdated = datetimeUpdated;
-    }
-
-    /**
-     * @return the goalSteps
-     */
-    public List<GoalStep> getGoalSteps() {
-        return goalSteps;
-    }
-
-    /**
-     * @param goalSteps the goalSteps to set
-     */
-    public void setGoalSteps(List<GoalStep> goalSteps) {
-        this.goalSteps = goalSteps;
+    public void setDatetimeUpdate(Timestamp datetimeUpdate) {
+        this.datetimeUpdate = datetimeUpdate;
     }
 }

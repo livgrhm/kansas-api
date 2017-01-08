@@ -44,14 +44,6 @@ public class KansasConfiguration extends Configuration {
     @JsonProperty("systemType")
     private String systemType = "";
     
-    @NotEmpty
-    @JsonProperty("template")
-    private String template = "";
-    
-    @NotEmpty
-    @JsonProperty("defaultName")
-    private String defaultName = "";
-    
     @Valid
     @NotNull
     private DataSourceFactory database = new DataSourceFactory();
@@ -182,33 +174,5 @@ public class KansasConfiguration extends Configuration {
      */
     public void setSystemType(String systemType) {
         this.systemType = systemType;
-    }
-
-    /**
-     * @return the template
-     */
-    public String getTemplate() {
-        return template;
-    }
-
-    /**
-     * @param template the template to set
-     */
-    public void setTemplate(String template) {
-        this.template = template;
-    }
-
-    /**
-     * @return the defaultName
-     */
-    public String getDefaultName() {
-        return defaultName;
-    }
-
-    /**
-     * @param defaultName the defaultName to set
-     */
-    public void setDefaultName(String defaultName) {
-        this.defaultName = defaultName;
     }
 }

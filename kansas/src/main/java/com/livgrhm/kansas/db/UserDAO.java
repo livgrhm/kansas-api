@@ -107,7 +107,7 @@ public interface UserDAO {
      * @param hash  Password hash to search for
      * @return      User if found
      */
-    @SqlQuery("select userId from user where userAuthHash=:hash")
+    @SqlQuery("select userId from user where userAuthHash=:hash and isActive=1 and isDeleted=0")
     User getUserByCurrentHash(@Bind("hash") String hash);
     
     /**
@@ -115,7 +115,7 @@ public interface UserDAO {
      * @param userId    ID of user to get
      * @return          User object
      */
-    @SqlQuery("select * from user where userId=:userId")
+    @SqlQuery("select * from user where userId=:userId and isActive=1 and isDeleted=0")
     @Mapper(UserMapper.class)
     User getUserById(@Bind("userId") int userId);
     
@@ -124,7 +124,7 @@ public interface UserDAO {
      * @param email Email address of user to get
      * @return      User object
      */
-    @SqlQuery("select * from user where email=:email")
+    @SqlQuery("select * from user where email=:email and isActive=1 and isDeleted=0")
     @Mapper(UserMapper.class)
     User getUserByEmail(@Bind("email") String email);
     
@@ -132,7 +132,7 @@ public interface UserDAO {
      * Get List of All Users
      * @return  List of User objects
      */
-    @SqlQuery("select * from user")
+    @SqlQuery("select * from user where isActive=1 and isDeleted=0")
     @Mapper(UserMapper.class)
     List<User> getUsers();
 }

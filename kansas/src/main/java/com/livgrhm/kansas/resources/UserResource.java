@@ -25,18 +25,18 @@ package com.livgrhm.kansas.resources;
 
 import com.codahale.metrics.annotation.Timed;
 import com.livgrhm.kansas.api.AuthItem;
+import com.livgrhm.kansas.api.AuthMap;
 import com.livgrhm.kansas.api.SimpleResponse;
 import com.livgrhm.kansas.core.User;
 import com.livgrhm.kansas.db.UserDAO;
-import java.util.HashMap;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.commons.lang.time.DateUtils;
 
 @Path("/user")
 @Produces(MediaType.APPLICATION_JSON)
@@ -44,11 +44,11 @@ import org.apache.commons.lang.time.DateUtils;
 public class UserResource {
     
     private final UserDAO dao;
-    private final HashMap authMap;
+    private final AuthMap authMap;
     
     private AuthItem thisAuth;
 
-    public UserResource(UserDAO dao, HashMap authMap) {
+    public UserResource(UserDAO dao, AuthMap authMap) {
         this.dao = dao; 
         this.authMap = authMap;
     }
@@ -56,7 +56,7 @@ public class UserResource {
     @GET
     @Timed
     public Response getUser(@QueryParam("auth") String auth, @Context HttpServletRequest req) {
-        if (!isAuthorised(auth, req.getRemoteAddr())) {
+        if (!authMap.isAuthorised(auth, req.getRemoteAddr())) {
             System.out.println("getUser Unauthorised " + auth);
             SimpleResponse resp = new SimpleResponse(401, "Unauthorized", "Authorization is required.");
             return Response.status(Response.Status.UNAUTHORIZED).entity(resp).build();
@@ -77,7 +77,7 @@ public class UserResource {
     @Path("/{userId}")
     @Timed
     public Response getUserById(@PathParam("userId") int userId, @QueryParam("auth") String auth, @Context HttpServletRequest req) {
-        if (!isAuthorised(auth, req.getRemoteAddr())) {
+        if (!authMap.isAuthorised(auth, req.getRemoteAddr())) {
             System.out.println("getUserById Unauthorised " + userId + " " + auth);
             SimpleResponse resp = new SimpleResponse(401, "Unauthorized", "Authorization is required.");
             return Response.status(Response.Status.UNAUTHORIZED).entity(resp).build();
@@ -98,7 +98,7 @@ public class UserResource {
     @Path("email/{email}")
     @Timed 
     public Response getUserByEmail(@PathParam("email") String email, @QueryParam("auth") String auth, @Context HttpServletRequest req) {
-        if (!isAuthorised(auth, req.getRemoteAddr())) {
+        if (!authMap.isAuthorised(auth, req.getRemoteAddr())) {
             System.out.println("getUserByEmail Unauthorised " + email + " " + auth);
             SimpleResponse resp = new SimpleResponse(401, "Unauthorized", "Authorization is required.");
             return Response.status(Response.Status.UNAUTHORIZED).entity(resp).build();
@@ -117,13 +117,9 @@ public class UserResource {
     
     @POST
     @Timed
-    public Response addUser(User user, @QueryParam("auth") String auth, @Context HttpServletRequest req) {
-        if (!isAuthorised(auth, req.getRemoteAddr())) {
-            System.out.println("addUser Unauthorised " + auth);
-            SimpleResponse resp = new SimpleResponse(401, "Unauthorized", "Authorization is required.");
-            return Response.status(Response.Status.UNAUTHORIZED).entity(resp).build();
-        }
+    public Response addUser(User user) {
         // POST e.g. '{"firstName":"test", "lastName":"tester", "email":"test", "userStatus":"N", "userPasswordHash":"1234"}'
+
         // Create authentication hash
         java.sql.Date now = new java.sql.Date((new java.util.Date()).getTime());
         String userAuthHash = DigestUtils.sha256Hex(user.getUserPasswordHash() + now.getTime());
@@ -145,12 +141,13 @@ public class UserResource {
     @PUT
     @Path("/{userId}")
     @Timed
-    public Response updateUser(@PathParam("userId") int userId, User user, @QueryParam("auth") String auth, @Context HttpServletRequest req) {
-        if (!isAuthorised(auth, req.getRemoteAddr())) {
+    public Response updateUser(@PathParam("userId") int userId, User user, @QueryParam("auth") String auth, @Context HttpServletRequest req, @Context HttpServletResponse response) {
+        if (!authMap.isAuthorised(auth, req.getRemoteAddr())) {
             System.out.println("updateUser Unauthorised " + auth);
             SimpleResponse resp = new SimpleResponse(401, "Unauthorized", "Authorization is required.");
             return Response.status(Response.Status.UNAUTHORIZED).entity(resp).build();
         }
+        
         // PUT e.g. '{"firstName":"test", "lastName":"tester", "email":"test"}'
         try {
             this.dao.updateUser(userId, user.getFirstName(), user.getLastName(), user.getEmail());
@@ -165,7 +162,7 @@ public class UserResource {
     @Path("/{userId}")
     @Timed
     public Response deleteUser(@PathParam("userId") int userId, @QueryParam("auth") String auth, @Context HttpServletRequest req) {
-        if (!isAuthorised(auth, req.getRemoteAddr())) {
+        if (!authMap.isAuthorised(auth, req.getRemoteAddr())) {
             System.out.println("deleteUser Unauthorised " + auth);
             SimpleResponse resp = new SimpleResponse(401, "Unauthorized", "Authorization is required.");
             return Response.status(Response.Status.UNAUTHORIZED).entity(resp).build();
@@ -179,50 +176,5 @@ public class UserResource {
             System.out.println("Exception deleting user: " + e.getMessage());
             return Response.status(Response.Status.NOT_IMPLEMENTED).build();
         }
-    }
-    
-    private boolean isAuthorised(String hash, String ip) {
-        System.out.println("AUTHORISING: " + hash + " IP: " + ip);
-        
-        if (hash == null || hash.equals("")) {
-            return false;
-        }
-
-        this.thisAuth = (AuthItem) this.authMap.get(hash);
-
-        // current expiration time set as 8 hours
-        DateUtils du = new DateUtils();
-        java.sql.Date testDate = new java.sql.Date((new java.util.Date()).getTime());
-
-        if (this.thisAuth != null) {
-            if (!this.thisAuth.loginDate.toString().equals(testDate.toString()) || !this.thisAuth.ipAddress.equals(ip)) {
-                // session expired - so return false, and delete this entry
-                authMap.remove(hash);
-                return false;
-            }
-            return true;    // i.e. the hash exists, and is current!
-        }
-
-        // hash is not in the list, but could be in the database (i.e. logged on from another instance of the server, or server could have
-        // been bounced. So see if it is in the db
-        User user = this.dao.getUserByCurrentHash(hash);
-        if (user == null) {
-            return false;   // hash doesn't exist
-        }
-        if (!user.getUserAuthTimestamp().toString().equals(testDate.toString())) {
-            return false;   // hash is in the db, but has expired
-        }
-        if (!user.getUserLastIP().equals(ip)) {
-            return false;   // hash is in the db, but wrong IP address
-        }
-
-        // so has exists and is still current - update thisAuth (i.e. for the current request), and update the hash table and return true
-        AuthItem ai = new AuthItem();
-        ai.userId = user.getUserId();
-        ai.loginDate = user.getUserAuthTimestamp();
-        ai.ipAddress = ip;
-        authMap.put(hash, ai);
-        thisAuth = ai;
-        return true;
     }
 }

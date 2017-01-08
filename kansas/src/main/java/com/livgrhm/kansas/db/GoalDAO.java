@@ -25,9 +25,8 @@ package com.livgrhm.kansas.db;
 
 import com.livgrhm.kansas.core.Goal;
 import com.livgrhm.kansas.core.GoalMapper;
-import com.livgrhm.kansas.core.User;
-import com.livgrhm.kansas.core.UserMapper;
-import java.util.Date;
+import com.livgrhm.kansas.core.GoalStep;
+import com.livgrhm.kansas.core.GoalStepMapper;
 import java.util.List;
 import org.skife.jdbi.v2.sqlobject.Bind;
 import org.skife.jdbi.v2.sqlobject.GetGeneratedKeys;
@@ -45,7 +44,7 @@ public interface GoalDAO {
      * Get List of All Goals
      * @return  List of Goal objects
      */
-    @SqlQuery("select * from goal")
+    @SqlQuery("select * from goal where isActive=1 and isDeleted=0")
     @Mapper(GoalMapper.class)
     List<Goal> getGoals();
     
@@ -54,16 +53,56 @@ public interface GoalDAO {
      * @param id    user ID
      * @return      List of Goal objects
      */
-    @SqlQuery("select * from goal where userId=:id")
+    @SqlQuery("select * from goal where userId=:id and isActive=1 and isDeleted=0")
     @Mapper(GoalMapper.class)
     List<Goal> getGoalsByUserId(@Bind("id") int id);
+    
+    /**
+     * Get List of All Goal Steps for Goal by Goal ID
+     * @param goalId    Goal ID
+     * @return          List of Goal Step objects
+     */
+    @SqlQuery("select * from goalStep where goalId=:goalId and isActive=1 and isDeleted=0")
+    @Mapper(GoalStepMapper.class)
+    List<GoalStep> getGoalSteps(@Bind("goalId") int goalId);
     
     /**
      * Get Goal by Goal ID
      * @param id    goal ID
      * @return      Goal object
      */
-    @SqlQuery("select * from goal where goalId=:id")
+    @SqlQuery("select * from goal where goalId=:id and isActive=1 and isDeleted=0")
     @Mapper(GoalMapper.class)
     Goal getGoalById(@Bind("id") int id);
+    
+    /**
+     * Create new Goal
+     * @param userId        User creating the goal
+     * @param timespan      Time in years to achieve the goal
+     * @param goalContent   Goal title/information
+     * @return              ID of created goal
+     */
+    @SqlUpdate("insert into goal (userId, timespan, goalContent) "
+            + "values (:userId, :timespan, :goalContent)")
+    @GetGeneratedKeys
+    int createGoal(@Bind("userId") int userId, @Bind("timespan") int timespan,
+            @Bind("goalContent") String goalContent);
+    
+    /**
+     * Update existing goal
+     * @param goalId        ID of goal to update
+     * @param timespan      Time in years to achieve the goal
+     * @param goalContent   Goal title/information
+     */
+    @SqlUpdate("update goal set timespan=:timespan, goalContent=:goalContent, "
+            + "datetimeUpdated=now() where goalId=:goalId")
+    void updateGoal(@Bind("goalId") int goalId, @Bind("timespan") int timespan, 
+            @Bind("goalContent") String goalContent);
+    
+    /**
+     * Delete (de-activate) existing goal
+     * @param goalId        ID of goal to delete
+     */
+    @SqlUpdate("update goal set isActive=0, isDeleted=1, datetimeUpdated=now() where goalId=:goalId")
+    void deleteGoal(@Bind("goalId") int goalId);
 }

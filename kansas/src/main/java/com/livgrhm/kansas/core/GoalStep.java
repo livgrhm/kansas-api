@@ -1,7 +1,12 @@
+package com.livgrhm.kansas.core;
+
+
+import java.sql.Timestamp;
+
 /*
  * The MIT License
  *
- * Copyright 2016 oliviagraham.
+ * Copyright 2017 oliviagraham.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,42 +26,46 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.livgrhm.kansas.core;
-
-import java.sql.Timestamp;
-import java.util.List;
 
 /**
  *
  * @author oliviagraham
  */
-public class Goal {
-    // core
+public class GoalStep {
+    private int goalStepId;
     private int goalId;
-    private int userId;
-    private int timespan;
-    private String goalContent;
+    private String goalStepContent;
     private int isActive;
     private int isDeleted;
     private Timestamp datetimeCreated;
-    private Timestamp datetimeUpdated;
+    private Timestamp datetimeUpdate;
     
-    // helper
-    private List<GoalStep> goalSteps;
+    public GoalStep () { }
     
-    public Goal () { }
-    
-    public Goal (int goalId, int userId, int timespan, String goalContent, int isActive,
+    public GoalStep (int goalStepId, int goalId, String goalStepContent, int isActive,
             int isDeleted, Timestamp datetimeCreated, Timestamp datetimeUpdated) {
         
+        this.goalStepId = goalStepId;
         this.goalId = goalId;
-        this.userId = userId;
-        this.timespan = timespan;
-        this.goalContent = goalContent;
+        this.goalStepContent = goalStepContent;
         this.isActive = isActive;
         this.isDeleted = isDeleted;
         this.datetimeCreated = datetimeCreated;
         this.datetimeCreated = datetimeUpdated;
+    }
+
+    /**
+     * @return the goalStepId
+     */
+    public int getGoalStepId() {
+        return goalStepId;
+    }
+
+    /**
+     * @param goalStepId the goalStepId to set
+     */
+    public void setGoalStepId(int goalStepId) {
+        this.goalStepId = goalStepId;
     }
 
     /**
@@ -74,45 +83,17 @@ public class Goal {
     }
 
     /**
-     * @return the userId
+     * @return the goalStepContent
      */
-    public int getUserId() {
-        return userId;
+    public String getGoalStepContent() {
+        return goalStepContent;
     }
 
     /**
-     * @param userId the userId to set
+     * @param goalStepContent the goalStepContent to set
      */
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    /**
-     * @return the timespan
-     */
-    public int getTimespan() {
-        return timespan;
-    }
-
-    /**
-     * @param timespan the timespan to set
-     */
-    public void setTimespan(int timespan) {
-        this.timespan = timespan;
-    }
-
-    /**
-     * @return the goalContent
-     */
-    public String getGoalContent() {
-        return goalContent;
-    }
-
-    /**
-     * @param goalContent the goalContent to set
-     */
-    public void setGoalContent(String goalContent) {
-        this.goalContent = goalContent;
+    public void setGoalStepContent(String goalStepContent) {
+        this.goalStepContent = goalStepContent;
     }
 
     /**
@@ -158,30 +139,16 @@ public class Goal {
     }
 
     /**
-     * @return the datetimeUpdated
+     * @return the datetimeUpdate
      */
-    public Timestamp getDatetimeUpdated() {
-        return datetimeUpdated;
+    public Timestamp getDatetimeUpdate() {
+        return datetimeUpdate;
     }
 
     /**
-     * @param datetimeUpdated the datetimeUpdated to set
+     * @param datetimeUpdate the datetimeUpdate to set
      */
-    public void setDatetimeUpdated(Timestamp datetimeUpdated) {
-        this.datetimeUpdated = datetimeUpdated;
-    }
-
-    /**
-     * @return the goalSteps
-     */
-    public List<GoalStep> getGoalSteps() {
-        return goalSteps;
-    }
-
-    /**
-     * @param goalSteps the goalSteps to set
-     */
-    public void setGoalSteps(List<GoalStep> goalSteps) {
-        this.goalSteps = goalSteps;
+    public void setDatetimeUpdate(Timestamp datetimeUpdate) {
+        this.datetimeUpdate = datetimeUpdate;
     }
 }

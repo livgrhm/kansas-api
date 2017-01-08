@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2016 oliviagraham.
+ * Copyright 2017 oliviagraham.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,40 +23,56 @@
  */
 package com.livgrhm.kansas.core;
 
+import java.sql.Time;
 import java.sql.Timestamp;
-import java.util.List;
+import java.util.Date;
 
 /**
  *
  * @author oliviagraham
  */
-public class Goal {
-    // core
+public class Milestone {
+    private int milestoneId;
     private int goalId;
-    private int userId;
-    private int timespan;
-    private String goalContent;
+    private String milestoneText;
+    private int milestoneDuration;
+    private Date milestoneStartDate;
+    private Date milestoneEndDate;
     private int isActive;
     private int isDeleted;
     private Timestamp datetimeCreated;
-    private Timestamp datetimeUpdated;
+    private Timestamp datetimeUpdate;
     
-    // helper
-    private List<GoalStep> goalSteps;
+    public Milestone() { }
     
-    public Goal () { }
-    
-    public Goal (int goalId, int userId, int timespan, String goalContent, int isActive,
+    public Milestone (int milestoneId, int goalId, String milestoneText, Time milestoneTime,
+            int milestoneDuration, Date milestoneStartDate, Date milestoneEndDate, int isActive,
             int isDeleted, Timestamp datetimeCreated, Timestamp datetimeUpdated) {
         
+        this.milestoneId = milestoneId;
         this.goalId = goalId;
-        this.userId = userId;
-        this.timespan = timespan;
-        this.goalContent = goalContent;
+        this.milestoneText = milestoneText;
+        this.milestoneDuration = milestoneDuration;
+        this.milestoneStartDate = milestoneStartDate;
+        this.milestoneEndDate = milestoneEndDate;
         this.isActive = isActive;
         this.isDeleted = isDeleted;
         this.datetimeCreated = datetimeCreated;
         this.datetimeCreated = datetimeUpdated;
+    }
+
+    /**
+     * @return the milestoneId
+     */
+    public int getMilestoneId() {
+        return milestoneId;
+    }
+
+    /**
+     * @param milestoneId the milestoneId to set
+     */
+    public void setMilestoneId(int milestoneId) {
+        this.milestoneId = milestoneId;
     }
 
     /**
@@ -74,45 +90,59 @@ public class Goal {
     }
 
     /**
-     * @return the userId
+     * @return the milestoneText
      */
-    public int getUserId() {
-        return userId;
+    public String getMilestoneText() {
+        return milestoneText;
     }
 
     /**
-     * @param userId the userId to set
+     * @param milestoneText the milestoneText to set
      */
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setMilestoneText(String milestoneText) {
+        this.milestoneText = milestoneText;
     }
 
     /**
-     * @return the timespan
+     * @return the milestoneDuration
      */
-    public int getTimespan() {
-        return timespan;
+    public int getMilestoneDuration() {
+        return milestoneDuration;
     }
 
     /**
-     * @param timespan the timespan to set
+     * @param milestoneDuration the milestoneDuration to set
      */
-    public void setTimespan(int timespan) {
-        this.timespan = timespan;
+    public void setMilestoneDuration(int milestoneDuration) {
+        this.milestoneDuration = milestoneDuration;
     }
 
     /**
-     * @return the goalContent
+     * @return the milestoneStartDate
      */
-    public String getGoalContent() {
-        return goalContent;
+    public Date getMilestoneStartDate() {
+        return milestoneStartDate;
     }
 
     /**
-     * @param goalContent the goalContent to set
+     * @param milestoneStartDate the milestoneStartDate to set
      */
-    public void setGoalContent(String goalContent) {
-        this.goalContent = goalContent;
+    public void setMilestoneStartDate(Date milestoneStartDate) {
+        this.milestoneStartDate = milestoneStartDate;
+    }
+
+    /**
+     * @return the milestoneEndDate
+     */
+    public Date getMilestoneEndDate() {
+        return milestoneEndDate;
+    }
+
+    /**
+     * @param milestoneEndDate the milestoneEndDate to set
+     */
+    public void setMilestoneEndDate(Date milestoneEndDate) {
+        this.milestoneEndDate = milestoneEndDate;
     }
 
     /**
@@ -158,30 +188,17 @@ public class Goal {
     }
 
     /**
-     * @return the datetimeUpdated
+     * @return the datetimeUpdate
      */
-    public Timestamp getDatetimeUpdated() {
-        return datetimeUpdated;
+    public Timestamp getDatetimeUpdate() {
+        return datetimeUpdate;
     }
 
     /**
-     * @param datetimeUpdated the datetimeUpdated to set
+     * @param datetimeUpdate the datetimeUpdate to set
      */
-    public void setDatetimeUpdated(Timestamp datetimeUpdated) {
-        this.datetimeUpdated = datetimeUpdated;
+    public void setDatetimeUpdate(Timestamp datetimeUpdate) {
+        this.datetimeUpdate = datetimeUpdate;
     }
-
-    /**
-     * @return the goalSteps
-     */
-    public List<GoalStep> getGoalSteps() {
-        return goalSteps;
-    }
-
-    /**
-     * @param goalSteps the goalSteps to set
-     */
-    public void setGoalSteps(List<GoalStep> goalSteps) {
-        this.goalSteps = goalSteps;
-    }
+        
 }
