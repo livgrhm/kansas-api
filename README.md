@@ -12,15 +12,15 @@ There is a corresponding mobile app built in [Ionic v2](http://ionicframework.co
 
 API Reference
 --
-- [USER](#)
-	- [GET Users](#)
+- [USER](#user)
+  - [GET Users](#)
   - [GET User By ID](#)
   - [GET User By Email](#)
   - [POST Add User](#)
   - [PUT Update User](#)
   - [DELETE Delete User](#)
 - [GOAL](#)
-	- [GET Goals](#)
+  - [GET Goals](#)
   - [GET Goals By User ID](#)
   - [GET Goal By ID](#)
   - [POST Add Goal](#)
@@ -49,6 +49,7 @@ TODO: *Document health checks here.*
 API Documentation
 --
 
+<a name="user"></a>
 **GET Users**
 ----
   
