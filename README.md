@@ -10,6 +10,12 @@ It has been built using [Java 8](http://www.oracle.com/technetwork/java/javase/o
 
 There is a corresponding mobile app built in [Ionic v2](http://ionicframework.com) which is built on top of [Angular2](http://www.angular2.com). - Please see my [other repositories](https://github.com/livgrhm).
 
+App Structure
+--
+*kansas/src/main/java/com/livgrhm/kansas/*
+
+You will find all of the relevant Java files here.
+
 API Reference
 --
 - [USER](#user)
