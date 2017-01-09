@@ -10,6 +10,26 @@ It has been built using [Java 8](http://www.oracle.com/technetwork/java/javase/o
 
 There is a corresponding mobile app built in [Ionic v2](http://ionicframework.com) which is built on top of [Angular2](http://www.angular2.com). - Please see my [other repositories](https://github.com/livgrhm).
 
+API Reference
+--
+- [USER](#)
+	- [GET Users](#)
+  - [GET User By ID](#)
+  - [GET User By Email](#)
+  - [POST Add User](#)
+  - [PUT Update User](#)
+  - [DELETE Delete User](#)
+- [GOAL](#)
+	- [GET Goals](#)
+  - [GET Goals By User ID](#)
+  - [GET Goal By ID](#)
+  - [POST Add Goal](#)
+  - [PUT Update Goal](#)
+  - [DELETE Delete Goal](#)
+- [GOALSTEP](#)
+- [MILESTONE](#)
+- [HABIT](#)
+
 How to start the Kansas application
 --
 
@@ -29,8 +49,9 @@ TODO: *Document health checks here.*
 API Documentation
 --
 
-**Get all Users** <div id='example'/>
+**GET Users**
 ----
+  
   Get a list of all users. Returns a list of user objects.
 
 * **URL**
@@ -82,4 +103,3 @@ API Documentation
 
 * **Notes:**
 
-  <_This is where all uncertainties, commentary, discussion etc. can go. I recommend timestamping and identifying oneself when leaving comments here._> 
