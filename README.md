@@ -13,12 +13,12 @@ There is a corresponding mobile app built in [Ionic v2](http://ionicframework.co
 API Reference
 --
 - [USER](#user)
-  - [GET Users](#)
-  - [GET User By ID](#)
-  - [GET User By Email](#)
-  - [POST Add User](#)
-  - [PUT Update User](#)
-  - [DELETE Delete User](#)
+  - [GET Users](#getusers)
+  - [GET User By ID](#getuserbyid)
+  - [GET User By Email](#getuserbyemail)
+  - [POST Add User](#adduser)
+  - [PUT Update User](#updateuser)
+  - [DELETE Delete User](#deleteuser)
 - [GOAL](#)
   - [GET Goals](#)
   - [GET Goals By User ID](#)
@@ -46,10 +46,11 @@ To see your applications health enter url `http://localhost:8081/healthcheck`
 
 TODO: *Document health checks here.*
 
-API Documentation
+<a name="user"></a>
+API Documentation: User
 --
 
-<a name="user"></a>
+<a name="getusers"></a>
 **GET Users**
 ----
   
@@ -104,3 +105,57 @@ API Documentation
 
 * **Notes:**
 
+<a name="getuserbyid"></a>
+**GET User By ID**
+----
+  
+  Get a single user by their unique User ID. Returns a user objects.
+
+* **URL**
+
+  /user/{userId}
+
+* **Method:**
+
+  `GET`
+  
+*  **URL Params**
+
+   **Required:**
+ 
+   `auth=[string]`  authentication hash for an administrator
+
+* **Data Params**
+
+  None
+
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** `{ userId : 1, firstName: "Olivia", lastName: "Graham" ... }`
+ 
+* **Error Response:**
+
+  * **Code:** 404 NOT FOUND <br />
+    **Content:** `{ error : "User doesn't exist" }`
+
+  OR
+
+  * **Code:** 401 UNAUTHORIZED <br />
+    **Content:** `{ status : "Unauthorized", message: "Authorization is required." }`
+
+* **Sample Call:**
+
+ ```javascript
+    $.ajax({
+      url: "/user/1",
+      params: { auth: "authString" },
+      dataType: "json",
+      type : "GET",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+
+* **Notes:**
