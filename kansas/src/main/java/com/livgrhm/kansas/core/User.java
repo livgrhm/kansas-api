@@ -32,33 +32,19 @@ import java.util.Date;
  * @author oliviagraham
  */
 public class User {
-    @JsonProperty("userId")
     private int userId;
-    @JsonProperty("firstName")
     private String firstName;
-    @JsonProperty("lastName")
     private String lastName; 
-    @JsonProperty("email")
     private String email;
-    @JsonProperty("userPasswordHash")
     private String userPasswordHash; 
-    @JsonProperty("userStatus")
     private String userStatus;
-    @JsonProperty("userAuthHash")
     private String userAuthHash; 
-    @JsonProperty("userLastIP")
     private String userLastIP; 
-    @JsonProperty("userFailedLogons")
     private int userFailedLogons;
-    @JsonProperty("userAuthTimestamp")
     private Date userAuthTimestamp;
-    @JsonProperty("isActive")
     private int isActive;
-    @JsonProperty("isDeleted")
     private int isDeleted;
-    @JsonProperty("datetimeCreated")
     private Timestamp datetimeCreated;
-    @JsonProperty("datetimeUpdated")
     private Timestamp datetimeUpdated;
 
     public User () { }
@@ -87,6 +73,7 @@ public class User {
     /**
      * @return the userId
      */
+    @JsonProperty
     public int getUserId() {
         return userId;
     }
@@ -94,6 +81,7 @@ public class User {
     /**
      * @param userId the userId to set
      */
+    @JsonProperty
     public void setUserId(int userId) {
         this.userId = userId;
     }
@@ -101,6 +89,7 @@ public class User {
     /**
      * @return the userFailedLogons
      */
+    @JsonProperty
     public int getUserFailedLogons() {
         return userFailedLogons;
     }
@@ -108,6 +97,7 @@ public class User {
     /**
      * @param userFailedLogons the userFailedLogons to set
      */
+    @JsonProperty
     public void setUserFailedLogons(int userFailedLogons) {
         this.userFailedLogons = userFailedLogons;
     }
@@ -115,6 +105,7 @@ public class User {
     /**
      * @return the firstName
      */
+    @JsonProperty
     public String getFirstName() {
         return firstName;
     }
@@ -122,6 +113,7 @@ public class User {
     /**
      * @param firstName the firstName to set
      */
+    @JsonProperty
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
@@ -129,6 +121,7 @@ public class User {
     /**
      * @return the lastName
      */
+    @JsonProperty
     public String getLastName() {
         return lastName;
     }
@@ -136,6 +129,7 @@ public class User {
     /**
      * @param lastName the lastName to set
      */
+    @JsonProperty
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
@@ -143,6 +137,7 @@ public class User {
     /**
      * @return the email
      */
+    @JsonProperty
     public String getEmail() {
         return email;
     }
@@ -150,6 +145,7 @@ public class User {
     /**
      * @param email the email to set
      */
+    @JsonProperty
     public void setEmail(String email) {
         this.email = email;
     }
@@ -157,6 +153,7 @@ public class User {
     /**
      * @return the userPasswordHash
      */
+    @JsonProperty
     public String getUserPasswordHash() {
         return userPasswordHash;
     }
@@ -164,6 +161,7 @@ public class User {
     /**
      * @param userPasswordHash the userPasswordHash to set
      */
+    @JsonProperty
     public void setUserPasswordHash(String userPasswordHash) {
         this.userPasswordHash = userPasswordHash;
     }
@@ -171,6 +169,7 @@ public class User {
     /**
      * @return the userAuthHash
      */
+    @JsonProperty
     public String getUserAuthHash() {
         return userAuthHash;
     }
@@ -178,6 +177,7 @@ public class User {
     /**
      * @param userAuthHash the userAuthHash to set
      */
+    @JsonProperty
     public void setUserAuthHash(String userAuthHash) {
         this.userAuthHash = userAuthHash;
     }
@@ -185,6 +185,7 @@ public class User {
     /**
      * @return the userLastIP
      */
+    @JsonProperty
     public String getUserLastIP() {
         return userLastIP;
     }
@@ -192,6 +193,7 @@ public class User {
     /**
      * @param userLastIP the userLastIP to set
      */
+    @JsonProperty
     public void setUserLastIP(String userLastIP) {
         this.userLastIP = userLastIP;
     }
@@ -199,6 +201,7 @@ public class User {
     /**
      * @return the userStatus
      */
+    @JsonProperty
     public String getUserStatus() {
         return userStatus;
     }
@@ -206,6 +209,7 @@ public class User {
     /**
      * @param userStatus the userStatus to set
      */
+    @JsonProperty
     public void setUserStatus(String userStatus) {
         this.userStatus = userStatus;
     }
@@ -213,6 +217,7 @@ public class User {
     /**
      * @return the userAuthTimestamp
      */
+    @JsonProperty
     public Date getUserAuthTimestamp() {
         return userAuthTimestamp;
     }
@@ -220,6 +225,7 @@ public class User {
     /**
      * @param userAuthTimestamp the userAuthTimestamp to set
      */
+    @JsonProperty
     public void setUserAuthTimestamp(Date userAuthTimestamp) {
         this.userAuthTimestamp = userAuthTimestamp;
     }
@@ -227,6 +233,7 @@ public class User {
     /**
      * @return the isActive
      */
+    @JsonProperty
     public int getIsActive() {
         return isActive;
     }
@@ -234,6 +241,7 @@ public class User {
     /**
      * @param isActive the isActive to set
      */
+    @JsonProperty
     public void setIsActive(int isActive) {
         this.isActive = isActive;
     }
@@ -241,6 +249,7 @@ public class User {
     /**
      * @return the isDeleted
      */
+    @JsonProperty
     public int getIsDeleted() {
         return isDeleted;
     }
@@ -248,6 +257,7 @@ public class User {
     /**
      * @param isDeleted the isDeleted to set
      */
+    @JsonProperty
     public void setIsDeleted(int isDeleted) {
         this.isDeleted = isDeleted;
     }
@@ -255,6 +265,7 @@ public class User {
     /**
      * @return the datetimeCreated
      */
+    @JsonProperty
     public Timestamp getDatetimeCreated() {
         return datetimeCreated;
     }
@@ -262,6 +273,7 @@ public class User {
     /**
      * @param datetimeCreated the datetimeCreated to set
      */
+    @JsonProperty
     public void setDatetimeCreated(Timestamp datetimeCreated) {
         this.datetimeCreated = datetimeCreated;
     }
@@ -269,6 +281,7 @@ public class User {
     /**
      * @return the datetimeUpdated
      */
+    @JsonProperty
     public Timestamp getDatetimeUpdated() {
         return datetimeUpdated;
     }
@@ -276,6 +289,7 @@ public class User {
     /**
      * @param datetimeUpdated the datetimeUpdated to set
      */
+    @JsonProperty
     public void setDatetimeUpdated(Timestamp datetimeUpdated) {
         this.datetimeUpdated = datetimeUpdated;
     }

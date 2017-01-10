@@ -1,0 +1,16 @@
+{
+    "userId": 9,
+    "firstName": "Olivia",
+    "lastName": "Graham",
+    "email": "livvy@mac.com",
+    "userPasswordHash": "1dbe6b1ff976e267b9afee17043ea45692ddb081891b9352d1132b85ce55ea76",
+    "userStatus": "A",
+    "userAuthHash": "e0307576bc9b7ff06d2e0fb50c0b94881aee3ab54b143a94fa6f788846eb4f31",
+    "userLastIP": "0:0:0:0:0:0:0:1",
+    "userFailedLogons": 0,
+    "userAuthTimestamp": "2017-01-10",
+    "isActive": 1,
+    "isDeleted": 0,
+    "datetimeCreated": null,
+    "datetimeUpdated": null
+}
