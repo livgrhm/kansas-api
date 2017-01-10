@@ -18,6 +18,8 @@ You will find all of the relevant Java files here.
 
 API Reference
 --
+- [AUTH](#auth)
+  - [GET Do Authentication](#doauth)
 - [USER](#user)
   - [GET Users](#getusers)
   - [GET User By ID](#getuserbyid)
