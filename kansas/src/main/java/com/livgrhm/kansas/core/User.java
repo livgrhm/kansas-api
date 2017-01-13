@@ -67,7 +67,7 @@ public class User {
         this.isActive = isActive;
         this.isDeleted = isDeleted;
         this.datetimeCreated = datetimeCreated;
-        this.datetimeCreated = datetimeUpdated;
+        this.datetimeUpdated = datetimeUpdated;
     }
     
     /**

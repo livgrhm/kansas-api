@@ -64,6 +64,8 @@ public class AuthResource {
     public AuthenticationResult doAuth(@QueryParam("email") String email, @QueryParam("hash") String hash, @Context HttpServletRequest req) {
         User user = this.dao.getUserByEmail(email);
         
+        System.out.println("USER!!!! " + user.getEmail());
+        
         if (user == null) {
             LOGGER.info(" auth notFound " + email);
             return new AuthenticationResult("F");

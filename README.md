@@ -44,7 +44,8 @@ How to start the Kansas application
 1. Fork this repository
 2. Run `mvn clean install` to build the application
 3. Start application with (note the build number in the jar file) `java -jar target/kansas-0.0.1.jar server config.yml` 
-4. To check that your application is running enter url `http://localhost:8080`
+3a. Alternatively you can run the start shell script `sh start.sh`
+4. To check that your application is running enter url (you will get a 404) `http://localhost:8080/api`
 5. For further instructions please check the [Dropwizard docs](http://www.dropwizard.io/1.0.5/docs/)
 
 Health Check

@@ -27,6 +27,10 @@ import com.livgrhm.kansas.core.Goal;
 import com.livgrhm.kansas.core.GoalMapper;
 import com.livgrhm.kansas.core.GoalStep;
 import com.livgrhm.kansas.core.GoalStepMapper;
+import com.livgrhm.kansas.core.Habit;
+import com.livgrhm.kansas.core.HabitMapper;
+import com.livgrhm.kansas.core.Milestone;
+import com.livgrhm.kansas.core.MilestoneMapper;
 import java.util.List;
 import org.skife.jdbi.v2.sqlobject.Bind;
 import org.skife.jdbi.v2.sqlobject.GetGeneratedKeys;
@@ -65,6 +69,27 @@ public interface GoalDAO {
     @SqlQuery("select * from goalStep where goalId=:goalId and isActive=1 and isDeleted=0")
     @Mapper(GoalStepMapper.class)
     List<GoalStep> getGoalSteps(@Bind("goalId") int goalId);
+    
+    
+    /**
+     * Get List of All Milestones for Goal by Goal ID
+     * @param goalId    Goal ID
+     * @return          List of Milestone objects
+     */
+    @SqlQuery("select * from milestone where goalId=:goalId and isActive=1 and isDeleted=0")
+    @Mapper(MilestoneMapper.class)
+    List<Milestone> getMilestones(@Bind("goalId") int goalId);
+    
+    /**
+     * Get List of All Habits for Goal by Goal ID
+     * @param goalId
+     * @return 
+     */
+    @SqlQuery("select h.*, ht.habitTypeDesc from habit h, habitType ht " +
+            "where h.habitType=ht.habitType and h.isActive=1 and h.isDeleted=0 " +
+            "and ht.isActive=1 and ht.isDeleted=0 and h.goalId=:goalId")
+    @Mapper(HabitMapper.class)
+    List<Habit> getHabits(@Bind("goalId") int goalId);
     
     /**
      * Get Goal by Goal ID

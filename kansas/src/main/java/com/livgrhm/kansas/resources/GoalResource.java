@@ -94,6 +94,8 @@ public class GoalResource {
             Goal g = this.dao.getGoalById(goalId);
             if (g != null) {
                 g.setGoalSteps(this.dao.getGoalSteps(g.getGoalId()));
+                g.setMilestones(this.dao.getMilestones(g.getGoalId()));
+                g.setHabits(this.dao.getHabits(g.getGoalId()));
                 return Response.ok(g).build();
             }
             return Response.status(Response.Status.NOT_FOUND).build();

@@ -55,7 +55,7 @@ public class UserResource {
     
     @GET
     @Timed
-    public Response getUser(@QueryParam("auth") String auth, @Context HttpServletRequest req) {
+    public Response getUsers(@QueryParam("auth") String auth, @Context HttpServletRequest req) {
         if (!authMap.isAuthorised(auth, req.getRemoteAddr())) {
             System.out.println("getUser Unauthorised " + auth);
             SimpleResponse resp = new SimpleResponse(401, "Unauthorized", "Authorization is required.");
@@ -84,6 +84,8 @@ public class UserResource {
         }
         try {
             User u = this.dao.getUserById(userId);
+            System.out.println("USER CREATED: " + u.getDatetimeCreated());
+            System.out.println("USER UPDATED: " + u.getDatetimeUpdated());
             if (u != null) {
                 return Response.ok(u).build();
             }

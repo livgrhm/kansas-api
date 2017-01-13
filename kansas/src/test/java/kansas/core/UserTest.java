@@ -29,10 +29,8 @@ import io.dropwizard.jackson.Jackson;
 import org.junit.Test;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.livgrhm.kansas.core.User;
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 /**
@@ -52,7 +50,7 @@ public class UserTest {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         java.util.Date date = dateFormat.parse("2017-01-08 09:43:05");
         long time = date.getTime();
-        Timestamp datetimeCreated = new Timestamp(time);
+        Timestamp timestamp = new Timestamp(time);
         
         // Create User
         final User user = new User(
@@ -68,8 +66,8 @@ public class UserTest {
             0,                      // userFailedLogons
             1,                      // isActive
             0,                      // isDeleted
-            null,        // datetimeCreated
-            null         // datetimeUpdated
+            timestamp,              // datetimeCreated
+            timestamp               // datetimeUpdated
         );
 
         final String expected = MAPPER.writeValueAsString(
@@ -87,7 +85,7 @@ public class UserTest {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         java.util.Date date = dateFormat.parse("2017-01-08 09:43:05");
         long time = date.getTime();
-        Timestamp datetimeCreated = new Timestamp(time);
+        Timestamp timestamp = new Timestamp(time);
         
         // Create User
         final User userDe = new User(
@@ -103,8 +101,8 @@ public class UserTest {
             0,                      // userFailedLogons
             1,                      // isActive
             0,                      // isDeleted
-            null,        // datetimeCreated
-            null         // datetimeUpdated
+            timestamp,              // datetimeCreated
+            timestamp               // datetimeUpdated
         );
         
         assertThat(MAPPER.readValue(fixture("fixtures/user.json"), User.class)).isEqualToComparingFieldByField(userDe);

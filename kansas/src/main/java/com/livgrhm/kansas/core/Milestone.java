@@ -41,7 +41,7 @@ public class Milestone {
     private int isActive;
     private int isDeleted;
     private Timestamp datetimeCreated;
-    private Timestamp datetimeUpdate;
+    private Timestamp datetimeUpdated;
     
     public Milestone() { }
     
@@ -58,7 +58,7 @@ public class Milestone {
         this.isActive = isActive;
         this.isDeleted = isDeleted;
         this.datetimeCreated = datetimeCreated;
-        this.datetimeCreated = datetimeUpdated;
+        this.datetimeUpdated = datetimeUpdated;
     }
 
     /**
@@ -188,17 +188,17 @@ public class Milestone {
     }
 
     /**
-     * @return the datetimeUpdate
+     * @return the datetimeUpdated
      */
-    public Timestamp getDatetimeUpdate() {
-        return datetimeUpdate;
+    public Timestamp getDatetimeUpdated() {
+        return datetimeUpdated;
     }
 
     /**
-     * @param datetimeUpdate the datetimeUpdate to set
+     * @param datetimeUpdated the datetimeUpdated to set
      */
-    public void setDatetimeUpdate(Timestamp datetimeUpdate) {
-        this.datetimeUpdate = datetimeUpdate;
+    public void setDatetimeUpdated(Timestamp datetimeUpdated) {
+        this.datetimeUpdated = datetimeUpdated;
     }
         
 }

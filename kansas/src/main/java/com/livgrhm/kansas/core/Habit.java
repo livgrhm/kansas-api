@@ -43,13 +43,17 @@ public class Habit {
     private int isActive;
     private int isDeleted;
     private Timestamp datetimeCreated;
-    private Timestamp datetimeUpdate;
+    private Timestamp datetimeUpdated;
+    
+    // helpers
+    private String habitTypeDesc;
     
     public Habit () { }
     
     public Habit (int habitId, int goalId, String habitText, String habitType,
             Time habitTime, int habitDuration, Date habitStartDate, Date habitEndDate,
-            int isActive, int isDeleted, Timestamp datetimeCreated, Timestamp datetimeUpdated) {
+            int isActive, int isDeleted, Timestamp datetimeCreated, Timestamp datetimeUpdated,
+            String habitTypeDesc) {
         
         this.habitId = habitId;
         this.goalId = goalId;
@@ -62,7 +66,8 @@ public class Habit {
         this.isActive = isActive;
         this.isDeleted = isDeleted;
         this.datetimeCreated = datetimeCreated;
-        this.datetimeCreated = datetimeUpdated;
+        this.datetimeUpdated = datetimeUpdated;
+        this.habitTypeDesc = habitTypeDesc;
     }
 
     Habit(int aInt, int aInt0, String string, int aInt1, int aInt2, Timestamp timestamp, Timestamp timestamp0) {
@@ -224,16 +229,30 @@ public class Habit {
     }
 
     /**
-     * @return the datetimeUpdate
+     * @return the datetimeUpdated
      */
-    public Timestamp getDatetimeUpdate() {
-        return datetimeUpdate;
+    public Timestamp getDatetimeUpdated() {
+        return datetimeUpdated;
     }
 
     /**
-     * @param datetimeUpdate the datetimeUpdate to set
+     * @param datetimeUpdated the datetimeUpdated to set
      */
-    public void setDatetimeUpdate(Timestamp datetimeUpdate) {
-        this.datetimeUpdate = datetimeUpdate;
+    public void setDatetimeUpdated(Timestamp datetimeUpdated) {
+        this.datetimeUpdated = datetimeUpdated;
+    }
+
+    /**
+     * @return the habitTypeDesc
+     */
+    public String getHabitTypeDesc() {
+        return habitTypeDesc;
+    }
+
+    /**
+     * @param habitTypeDesc the habitTypeDesc to set
+     */
+    public void setHabitTypeDesc(String habitTypeDesc) {
+        this.habitTypeDesc = habitTypeDesc;
     }
 }
