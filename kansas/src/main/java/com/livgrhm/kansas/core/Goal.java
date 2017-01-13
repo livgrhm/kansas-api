@@ -41,8 +41,10 @@ public class Goal {
     private Timestamp datetimeCreated;
     private Timestamp datetimeUpdated;
     
-    // helper
+    // helpers
     private List<GoalStep> goalSteps;
+    private List<Milestone> milestones;
+    private List<Habit> habits;
     
     public Goal () { }
     
@@ -56,7 +58,7 @@ public class Goal {
         this.isActive = isActive;
         this.isDeleted = isDeleted;
         this.datetimeCreated = datetimeCreated;
-        this.datetimeCreated = datetimeUpdated;
+        this.datetimeUpdated = datetimeUpdated;
     }
 
     /**
@@ -183,5 +185,33 @@ public class Goal {
      */
     public void setGoalSteps(List<GoalStep> goalSteps) {
         this.goalSteps = goalSteps;
+    }
+
+    /**
+     * @return the milestones
+     */
+    public List<Milestone> getMilestones() {
+        return milestones;
+    }
+
+    /**
+     * @param milestones the milestones to set
+     */
+    public void setMilestones(List<Milestone> milestones) {
+        this.milestones = milestones;
+    }
+
+    /**
+     * @return the habits
+     */
+    public List<Habit> getHabits() {
+        return habits;
+    }
+
+    /**
+     * @param habits the habits to set
+     */
+    public void setHabits(List<Habit> habits) {
+        this.habits = habits;
     }
 }

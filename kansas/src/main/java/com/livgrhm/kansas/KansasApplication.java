@@ -72,7 +72,7 @@ public class KansasApplication extends Application<KansasConfiguration> {
         final GoalResource goalResource = new GoalResource(goalDAO, checkAuth);
         
         // Set URL pattern
-//        environment.jersey().setUrlPattern("/api/*");
+        environment.jersey().setUrlPattern("/api/*");
         
         // Register Resources
         environment.jersey().register(authResource);

@@ -48,7 +48,8 @@ public class HabitMapper implements ResultSetMapper<Habit> {
                 r.getInt("isActive"),
                 r.getInt("isDeleted"),
                 r.getTimestamp("datetimeCreated"),
-                r.getTimestamp("datetimeUpdated")
+                r.getTimestamp("datetimeUpdated"),
+                r.getString("habitTypeDesc")
         );
     }
 }
