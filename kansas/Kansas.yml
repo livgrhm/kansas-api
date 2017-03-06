@@ -66,5 +66,9 @@ server:
   applicationConnectors:
   - type: http
     port: 8080
-#  requestLog:
-#    appenders: []
+#  - type: https
+#    port: 8443
+#    keyStorePath: certs/keystore.jks
+#    keyStorePassword: kansas-4PP2
+#    validateCerts: false
+#    validatePeers: false

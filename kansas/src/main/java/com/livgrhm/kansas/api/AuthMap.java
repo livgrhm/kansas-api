@@ -33,7 +33,7 @@ import org.apache.commons.lang.time.DateUtils;
  * @author oliviagraham
  */
 public class AuthMap {
-    private UserDAO dao;
+    private final UserDAO dao;
     private AuthItem thisAuth;
     
     private HashMap authMap = new HashMap();
