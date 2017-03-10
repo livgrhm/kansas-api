@@ -34,7 +34,8 @@ public class KansasApplication extends Application<KansasConfiguration> {
     @Override
     public void initialize(final Bootstrap<KansasConfiguration> bootstrap) {
         bootstrap.addBundle(new DBIExceptionsBundle());
-        //bootstrap.addBundle(new RedirectBundle(new HttpsRedirect(false)));
+        //bootstrap.addBundle(new MultiPartBundle()); // upload imgs etc
+        //bootstrap.addBundle(new RedirectBundle(new HttpsRedirect(false))); any 8080 redirect to ssl
     }
 
     @Override

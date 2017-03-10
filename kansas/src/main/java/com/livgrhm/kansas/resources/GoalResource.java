@@ -93,9 +93,7 @@ public class GoalResource {
         try {
             Goal g = this.dao.getGoalById(goalId);
             if (g != null) {
-                g.setGoalSteps(this.dao.getGoalSteps(g.getGoalId()));
-                g.setMilestones(this.dao.getMilestones(g.getGoalId()));
-                g.setHabits(this.dao.getHabits(g.getGoalId()));
+                g = this.setupGoal(g);
                 return Response.ok(g).build();
             }
             return Response.status(Response.Status.NOT_FOUND).build();
@@ -117,6 +115,10 @@ public class GoalResource {
         try {
             List<Goal> list = this.dao.getGoalsByUserId(userId);
             if (list != null) {
+                for (int i = 0; i < list.size(); i++) {
+                    Goal g = list.get(i);
+                    g = this.setupGoal(g);
+                }
                 return Response.ok(list).build();
             }
             return Response.status(Response.Status.NOT_FOUND).build();
@@ -180,5 +182,12 @@ public class GoalResource {
             System.out.println("Exception deleting goal: " + e.getMessage());
             return Response.status(Response.Status.NOT_IMPLEMENTED).build();
         }
+    }
+    
+    private Goal setupGoal(Goal g) {
+        g.setGoalSteps(this.dao.getGoalSteps(g.getGoalId()));
+        g.setMilestones(this.dao.getMilestones(g.getGoalId()));
+        g.setHabits(this.dao.getHabits(g.getGoalId()));
+        return g;
     }
 }

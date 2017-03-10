@@ -99,7 +99,7 @@ public interface UserDAO {
      * Lock user account
      * @param userId ID of user
      */
-    @SqlUpdate("update user set usrStatus='L' where userId=:userId")
+    @SqlUpdate("update user set userStatus='L' where userId=:userId")
     void updateUserLockAccount(@Bind("userId") int userId);
     
     /**
